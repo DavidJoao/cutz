@@ -8,13 +8,49 @@ datasource db {
 }
 
 model User {
-  client_id     Int       @id @default(autoincrement())
-  first_name    String    @db.VarChar(20)
-  second_name   String    @db.VarChar(20)
-  dob           DateTime  @db.Date()
-  appointments  String[]  @db.VarChar(255)  
-  email         String    @db.VarChar(255)  @unique
-  password      String    @db.VarChar(255)
-  phone         String    @db.VarChar(10)   @unique 
+  client_id         Int             @id @default(autoincrement()) @unique
+  first_name        String          @db.VarChar(20)
+  second_name       String          @db.VarChar(20)
+  dob               DateTime        @db.Date
+  appointments      Appointment[]  
+  email             String          @db.VarChar(255)  @unique
+  password          String          @db.VarChar(255)
+  phone             String          @db.VarChar(10)   @unique 
 }
 
+model Business {
+  business_id       Int             @id @default(autoincrement()) @unique
+  first_name        String          @db.VarChar(255)
+  second_name       String          @db.VarChar(255)
+  appointments      Appointment[]
+  dob               DateTime        @db.Date
+  email             String          @db.VarChar(255)  @unique
+  password          String          @db.VarChar(255)
+  phone             String          @db.VarChar(10)   @unique 
+  location          String          @db.VarChar(255)
+  services          Service[]
+}
+
+model Service {
+  service_id        Int             @id @default(autoincrement()) @unique
+  service_name      String          @db.VarChar(255)
+  service_price     Decimal         @db.Decimal()
+  business          Business        @relation(fields: [business_id], references: [business_id])
+  business_id       Int           
+}
+
+model Appointment {
+  appointment_id    Int             @id @default(autoincrement()) @unique
+  date              DateTime        @db.Date
+  time              DateTime        @db.Time()
+  location          String          @db.VarChar(255)
+  status            String          @db.VarChar(255)
+  price             Decimal         @db.Decimal()
+  service           String          @db.VarChar(255)
+  client_name       String          @db.VarChar(255)
+  client            User            @relation(fields: [client_id], references: [client_id])
+  client_id         Int
+  business_name     String          @db.VarChar(255)
+  business          Business        @relation(fields: [business_id], references: [business_id])
+  business_id       Int   
+}
