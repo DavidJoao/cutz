@@ -3,7 +3,7 @@ import "./globals.css";
 import Provider from "./components/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
-const montserrat = Montserrat({ subsets: ['latin'] })
+// const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
   title: "Cutz: Haircut Appointment",
@@ -12,8 +12,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${montserrat.className} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body>
         <Provider>
           {children}
         </Provider>
