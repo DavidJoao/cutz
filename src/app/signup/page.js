@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useForm, getValues } from 'react-hook-form'
+import Link from 'next/link'
 
 const Page = () => {
 
@@ -43,6 +44,7 @@ const Page = () => {
             <input className='input w-[340px]' required type="number" placeholder="Phone" {...register("phone")}/>
             { passwordObj.password === passwordObj.confirmPassword ? ( <input value={"Register"} type='submit' className='primary-button' /> ) : ( <></> )}
         </form>
+        <Link href={"/login"} className="text-white mt-3">Already have an account? Log In</Link>
     </div>
   )
 }
