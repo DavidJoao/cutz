@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components { 
+    .primary-button {
+        @apply border rounded w-[340px] p-2 text-center hover:bg-[#262626]
+    }
+}
