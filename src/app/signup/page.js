@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { useForm, getValues } from 'react-hook-form'
 import Link from 'next/link'
+import axios from 'axios'
+
 
 const Page = () => {
 
@@ -11,6 +13,8 @@ const Page = () => {
     }
 
     const [passwordObj, setPasswordObj] = useState(passwordCheck)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [loginButton, setLoginButton] = useState(false)
 
     const { 
         register,
@@ -28,7 +32,16 @@ const Page = () => {
         })
     }
 
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = (data) => {
+
+        setErrorMessage('')
+
+        axios.post('/api/signup', data, { headers: { 'Content-Type': 'application/json' } })
+            .then(res => console.log(res))
+            .catch(err => {
+                setErrorMessage(err?.response?.data?.error)
+            })
+    }
 
   return (
     <div className='w-full h-screen bg-black flex flex-col items-center justify-center'>
@@ -44,6 +57,8 @@ const Page = () => {
             <input className='input w-[340px]' required type="number" placeholder="Phone" {...register("phone")}/>
             { passwordObj.password === passwordObj.confirmPassword ? ( <input value={"Register"} type='submit' className='primary-button' /> ) : ( <></> )}
         </form>
+        { errorMessage !== "" ? ( <p className='m-3 text-[#db0f00]'>{errorMessage}</p> ) : ( <></> ) }
+        { loginButton === true ? ( <Link href={"/login"} className='primary-button'>Account Created Successfully, Log In Here!</Link> ) : ( <></> ) }
         <Link href={"/login"} className="text-white mt-3">Already have an account? Log In</Link>
     </div>
   )
