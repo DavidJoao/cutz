@@ -5,19 +5,39 @@ const prisma = new PrismaClient();
 
 export default async function POST (request, response) {
     try {
-        await prisma.user.create({
-            data: {
-                first_name: 'David',
-                second_name: 'Sandoval',
-                dob: new Date('1999-08-06').toISOString(),
-                email: 'davidsandoval596@gmail.com',
-                password: '123456',
-                phone: '6615835098'
-            }
-        })
+        const form = await request.body
 
-        console.log(response)
+        const existingEmail = await prisma.user.findFirst( { where: { email: form.email } } )
+
+        const existingPhone = await prisma.user.findFirst( { where: { phone: form.phone } } )
+
+        if (existingEmail) {
+            response.status(500).json({ error: 'Email Already In Use'});
+        } else if (existingPhone) {
+            response.status(500).json({ error: 'Phone Number Already In Use'});
+        } else {
+
+            const hash = await bcrypt.hash(form.password, 10);
+
+            await prisma.user.create({
+                data: {
+                    first_name: form.firstName,
+                    second_name: form.secondName,
+                    dob: new Date(form.dob).toISOString(),
+                    email: form.email,
+                    password: hash,
+                    phone: form.phone
+                }
+            })
+
+            response.status(200).json({ success: true });
+
+        }
+
     } catch (error) {
-        console.log(error)
+
+        console.error('Error:', error);
+        response.status(500).json({ error: 'Internal Server Error' });
+
     }
 }
