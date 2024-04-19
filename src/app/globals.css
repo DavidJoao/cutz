@@ -6,6 +6,9 @@
     .primary-button {
         @apply border rounded w-[340px] p-2 text-center hover:bg-[#262626]
     }
+    .success-button {
+        @apply border rounded w-[340px] p-2 text-center hover:bg-[#0b5400]
+    }
     .input { 
         @apply text-black rounded p-2
     }
