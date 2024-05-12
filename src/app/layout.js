@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 // const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
-  title: "Cutz: Haircut Appointment",
+  title: "ManageIt",
   description: "Developed by David Sandoval",
 };
 
