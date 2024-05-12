@@ -21,9 +21,7 @@ export default async function POST (request, response) {
 
             await prisma.user.create({
                 data: {
-                    first_name: form.firstName,
-                    second_name: form.secondName,
-                    dob: new Date(form.dob).toISOString(),
+                    name: form.name,
                     email: form.email,
                     password: hash,
                     phone: form.phone
