@@ -19,6 +19,7 @@ model Employee {
   jobsite_id        Int
   dailies           Daily[]       
   timesheets        Timesheet[]
+  role              String          @db.VarChar(255)
 }
 
 model Employer {
@@ -32,6 +33,7 @@ model Employer {
   jobsites          Jobsite[]
   dailies           Daily[]       
   timesheets        Timesheet[]
+  role              String          @db.VarChar(255)
 }
 
 model Equipment {
