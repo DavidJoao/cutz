@@ -1,7 +1,8 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, getValues } from 'react-hook-form'
 import Link from 'next/link'
+import { registerEmployer } from '@/app/custom/registerFunctions';
 
 
 const EmployerSignup = () => {
@@ -19,6 +20,7 @@ const EmployerSignup = () => {
         register,
         handleSubmit,
         watch,
+        reset,
         getValues,
         formState: { errors },
     } = useForm();
@@ -35,11 +37,16 @@ const EmployerSignup = () => {
 
         setErrorMessage('')
 
-        axios.post('/api/signup', data, { headers: { 'Content-Type': 'application/json' } })
-            .then(res => console.log(res))
-            .catch(err => {
-                setErrorMessage(err?.response?.data?.error)
-            })
+        registerEmployer(data)
+        .then(res => {
+            if (res.error) {
+                setErrorMessage(res.msg)
+            } else {
+                reset()
+            }
+        })
+        .catch(err => setErrorMessage(err))
+
     }
 
   return (
