@@ -7,9 +7,15 @@ export default async function POST (request, response) {
     try {
 
         const employers = await prisma.employer.findMany()
-        const employersNames = employers.map(employer => employer.name)
+        const employerObjectArray = [];
+        employers.map(employer => {
+            employerObjectArray.push({
+                employerName: employer.name,
+                employerId: employer.employer_id
+            })
+        })
 
-        response.status(200).json({ success: true, employersNames });
+        response.status(200).json({ success: true, employerObjectArray });
         
     } catch (error) {
 
