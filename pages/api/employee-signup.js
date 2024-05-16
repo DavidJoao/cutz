@@ -18,6 +18,8 @@ export default async function POST (request, response) {
         } else {
 
             const hash = await bcrypt.hash(form.password, 10);
+            let arr = form.employer.split(" ");
+            arr.shift();
 
             await prisma.employee.create({
                 data: {
@@ -26,8 +28,11 @@ export default async function POST (request, response) {
                     password: hash,
                     phone: form.phone,
                     role: "employee",
-                    employer: form.employer,
-
+                    employer: {
+                        connect: {
+                            employer_id: parseInt(form.employer.split(" ")[0])
+                        }
+                    }
                 }
             })
 
