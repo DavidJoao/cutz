@@ -15,8 +15,8 @@ model Employee {
   phone             String          @db.VarChar(10) @unique
   employer          Employer        @relation(fields: [employer_id], references: [employer_id])
   employer_id       Int
-  jobsite           Jobsite         @relation(fields: [jobsite_id], references: [jobsite_id])
-  jobsite_id        Int
+  jobsite           Jobsite?         @relation(fields: [jobsite_id], references: [jobsite_id])
+  jobsite_id        Int?             
   dailies           Daily[]       
   timesheets        Timesheet[]
   role              String          @db.VarChar(255)
