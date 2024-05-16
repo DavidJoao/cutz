@@ -28,7 +28,10 @@ const Page = () => {
 
     useEffect(() => {
         fetchEmployers()
-        .then(res => setEmployers(res?.data?.employersNames))
+        .then(res => {
+            console.log(res)
+            setEmployers(res?.data?.employerObjectArray)
+        })
     }, [])
 
     const handleChange = (e) => {
@@ -60,7 +63,7 @@ const Page = () => {
                 <option>Select Company</option>
                 { employers && employers.map((employer, index) => {
                     return (
-                        <option key={index}>{employer}</option>
+                        <option key={index} value={`${employer.employerId} ${employer.employerName}`}>{employer.employerName}</option>
                     )
                 })}
 
