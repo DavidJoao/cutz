@@ -5,6 +5,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import { registerEmployee } from '../custom/registerFunctions'
 import { fetchEmployers } from '../custom/registerFunctions'
+import { navigate } from '../custom/redirect'
 
 const Page = () => {
 
@@ -21,6 +22,7 @@ const Page = () => {
     const { 
         register,
         handleSubmit,
+        reset,
         watch,
         getValues,
         formState: { errors },
@@ -29,7 +31,6 @@ const Page = () => {
     useEffect(() => {
         fetchEmployers()
         .then(res => {
-            console.log(res)
             setEmployers(res?.data?.employerObjectArray)
         })
     }, [])
@@ -46,8 +47,17 @@ const Page = () => {
 
         setErrorMessage('')
 
-        const result = registerEmployee(data)
-        console.log(result)
+        registerEmployee(data)
+        .then(res => {
+            if (res.error) {
+                setErrorMessage(res.msg)
+                console.log(res.msg)
+            } else {
+                reset()
+                navigate('login')
+            }
+        })
+        .catch(err => setErrorMessage(err))
     }
 
   return (
