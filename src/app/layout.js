@@ -1,16 +1,17 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "./components/Provider";
+import { navigate } from "./custom/redirect";
 
 const inter = Inter({ subsets: ["latin"] });
-// const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
   title: "ManageIt",
   description: "Developed by David Sandoval",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
