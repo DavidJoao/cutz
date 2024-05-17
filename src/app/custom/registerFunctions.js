@@ -6,7 +6,7 @@ export const registerEmployee = async (user) => {
 			headers: { "Content-Type": "application/json" },
 		})
 	} catch (e) {
-		return { error: true, msg: e.response.data.msg }
+		return { error: true, msg: e && e.response.data.error }
 	}
 }
 
