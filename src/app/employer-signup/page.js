@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, getValues } from 'react-hook-form'
 import Link from 'next/link'
 import { registerEmployer } from '@/app/custom/registerFunctions';
+import { navigate } from '../custom/redirect';
 
 
 const EmployerSignup = () => {
@@ -43,10 +44,10 @@ const EmployerSignup = () => {
                 setErrorMessage(res.msg)
             } else {
                 reset()
+                navigate('login')
             }
         })
         .catch(err => setErrorMessage(err))
-
     }
 
   return (
