@@ -25,7 +25,7 @@ export const authOptions = {
                     return null
                 }
     
-                const existingUser = await db.client.findUnique({ where: { email: credentials.email } })
+                const existingUser = await db.employee.findUnique({ where: { email: credentials.email } })
     
                 if (!existingUser) return null;
     
