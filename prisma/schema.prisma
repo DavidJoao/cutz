@@ -10,7 +10,7 @@ datasource db {
 model Employee {
   employee_id       Int             @id @default(autoincrement()) @unique
   name              String          @db.VarChar(50)
-  email             String          @db.VarChar(60)
+  email             String          @db.VarChar(60)               @unique
   password          String          @db.VarChar(255)
   phone             String          @db.VarChar(10) @unique
   employer          Employer        @relation(fields: [employer_id], references: [employer_id])
@@ -25,9 +25,9 @@ model Employee {
 model Employer {
   employer_id       Int             @id @default(autoincrement()) @unique
   name              String          @db.VarChar(50)
-  email             String          @db.VarChar(60)
+  email             String          @db.VarChar(60)               @unique
   password          String          @db.VarChar(255)
-  phone             String          @db.VarChar(10) @unique
+  phone             String          @db.VarChar(10)               @unique
   employees         Employee[]    
   equipment         Equipment[]
   jobsites          Jobsite[]
