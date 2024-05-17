@@ -1,19 +1,41 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm, getValues } from 'react-hook-form'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { navigate } from '../custom/redirect'
 
-const Login = () => {
+const Login = async () => {
 
   const { 
     register,
     handleSubmit,
     watch,
+    reset,
     getValues,
     formState: { errors },
 } = useForm();
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (data) => {
+
+      const signInData = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false
+      })
+
+      if (signInData?.ok === false) {
+        console.error(signInData.error)
+        // setMessage('Incorrect password or email')
+      } else {
+        console.log('Logged In Successfully')
+        console.log(signInData)
+        // router.push('/dashboard')
+        // router.refresh();
+      }
+      
+  }
 
   return (
     <div className='w-full h-screen bg-black flex flex-col items-center justify-center text-white'>
