@@ -1,9 +1,10 @@
 import { db } from "@/app/custom/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
-const bcrypt = require('bcrypt')
+import bcrypt from 'bcryptjs'
+import NextAuth from 'next-auth'
 
-export const authOptions = {
+const authOptions = {
     adapter: PrismaAdapter(db),
     secret: process.env.NEXTAUTH_SECRET,
     session: {
@@ -29,7 +30,7 @@ export const authOptions = {
     
                 if (!existingUser) return null;
     
-                const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password)
+                const passwordMatch = bcrypt.compare(credentials.password, existingUser.password)
     
                 if (!passwordMatch) return null
     
@@ -61,3 +62,5 @@ export const authOptions = {
           }
     }
 }
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
