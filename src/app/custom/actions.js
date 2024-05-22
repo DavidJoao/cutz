@@ -1,5 +1,5 @@
 "use server"
-import { signIn, auth} from "./auth";
+import { signIn, signOut, auth} from "./auth";
 import { AuthError } from "next-auth";
 
 //LOG SESSION
@@ -8,13 +8,23 @@ export async function logSession() {
     return session
 }
 
+// LOGOUT USER
+export async function logoutUser(){
+    await signOut({ redirect: true, redirectTo: '/login' })
+    const session = await auth()
+    return session
+}
+
 // AUTHENTICATE USER LOGIN
-export async function authenticate ( formData ) {
+export async function authenticate ( e, formData ) {
+    e.preventDefault();
+    
     try {
         await signIn('credentials', {
             email: formData.email,
             password: formData.password,
-            redirect: false
+            redirect: true,
+            redirectTo: '/dashboard'
           })
     } catch (error) {
         if (error) {
