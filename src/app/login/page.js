@@ -33,6 +33,9 @@ const Login = () => {
       <button onClick={() => {
         logSession().then(res => console.log(res))
       }}>Click</button>
+      <button onClick={() => {
+        logoutUser().then(res => console.log(res))
+      }}>Click</button>
     </div>
   )
 }
