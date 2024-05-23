@@ -16,8 +16,7 @@ export async function logoutUser(){
 }
 
 // AUTHENTICATE USER LOGIN
-export async function authenticate ( e, formData ) {
-    e.preventDefault();
+export async function authenticate ( formData ) {
     
     try {
         await signIn('credentials', {
@@ -38,3 +37,5 @@ export async function authenticate ( e, formData ) {
         throw error;
     }
 }
+
+// FETCH SESSION
