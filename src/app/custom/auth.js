@@ -40,27 +40,24 @@ const authOptions = {
             }
             })
         ],
-    callbacks: {
-        async jwt({ token, user }) {
-            console.log(token, user)
-            if (user) {
+        callbacks: {
+            async jwt({ token, user }) {
+                if (user) {
+                    const { password, ...userWithoutPassword } = user.user
+                    return {
+                        ...token,
+                        user: userWithoutPassword
+                    }
+                }
+                return token
+            },
+            async session({ session, token }) {
                 return {
-                    ...token,
-                    username: user.name
+                    ...session, 
+                    user: token.user
                 }
             }
-            return token
-          },
-          async session({ session, token }) {
-            return {
-                ...session, 
-                user: {
-                    ...session.user,
-                    name: token.name
-                }
-            }
-          }
-    }
+        }
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
