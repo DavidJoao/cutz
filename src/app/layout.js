@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "./components/Provider";
+import Navbar from "./components/Navbar";
+import { auth } from "./custom/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,10 +13,13 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 
+  const session = await auth()
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
+    <html lang="en" >
+      <body suppressHydrationWarning={true}>
         <Provider>
+          { session && session ? <Navbar session={session} /> : <></> }
           {children}
         </Provider>
       </body>
