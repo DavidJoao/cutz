@@ -15,4 +15,7 @@
     .input { 
         @apply text-black rounded p-2
     }
+    .nav-button {
+        @apply border border-[1px] w-[90%] rounded p-1 hover:bg-[#303030]
+    }
 }

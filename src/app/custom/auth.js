@@ -26,11 +26,11 @@ const authOptions = {
                     return null
                 }
     
-                const existingUser = await db.employee.findUnique({ where: { email: credentials.email } })
+                const existingUser = await db.employee.findUnique({ where: { email: credentials.email } }) || await db.employer.findUnique({ where: { email: credentials.email } })
     
                 if (!existingUser) return null;
     
-                const passwordMatch = bcrypt.compare(credentials.password, existingUser.password)
+                const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password)
     
                 if (!passwordMatch) return null
     
